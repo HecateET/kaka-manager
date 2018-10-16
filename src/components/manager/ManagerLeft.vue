@@ -7,9 +7,9 @@
         @open="handleOpen"
         @close="handleClose">
 
-        <router-link role="presentation" to="/" tag="li">
+        <router-link role="presentation" to="/control" tag="li">
           <el-menu-item index="1">
-            <i class="el-icon-upload"></i>
+            <i class="el-icon-up load"></i>
             <span slot="title">控制台</span>
           </el-menu-item>
         </router-link>
@@ -21,13 +21,19 @@
             <span>内容管理</span>
           </template>
           <el-menu-item-group>
-            <template slot="title">内容管理</template>
-            <router-link role="presentation" to="/edit" tag="li">
-              <el-menu-item index="2-1">活动发布</el-menu-item>
-            </router-link>
+            <template slot="title">已发布活动</template>
             <router-link role="presentation" to="/managercontrol" tag="li">
-              <el-menu-item index="2-2">活动管理</el-menu-item>
+              <el-menu-item index="2-1">活动管理</el-menu-item>
             </router-link>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <template slot="title">活动发布</template>
+              <router-link role="presentation" to="/managerActivityEdit" tag="li">
+                <el-menu-item index="2-2">活动发布</el-menu-item>
+              </router-link>
+              <router-link role="presentation" to="/managerCommodityEdit" tag="li">
+                <el-menu-item index="2-3">商品发布</el-menu-item>
+              </router-link>
           </el-menu-item-group>
         </el-submenu>
 

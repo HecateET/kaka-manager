@@ -1,5 +1,18 @@
 <template>
   <div>
+      <div>
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="bread">
+          <el-breadcrumb-item :to="{ path: '/control' }"><i class="el-icon-upload"></i>&nbsp;控制台</el-breadcrumb-item>
+          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
+          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+    <hr>
+    <div style="margin-top: 20px">
+      <el-button type="primary" plain @click="showAll()">全部</el-button>
+      <el-button type="primary" plain @click="showActivity()">活动类</el-button>
+      <el-button type="primary" plain @click="showShopping()">商品类</el-button>
+    </div>
     <el-table
       ref="multipleTable"
       :data="tableData"
@@ -8,7 +21,7 @@
       @selection-change="handleSelectionChange">
 
       <el-table-column
-        type="index">
+        type="index"  width="55">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.id }}</span>
         </template>
@@ -21,7 +34,7 @@
 
       <el-table-column
         label="文章标题"
-        width="300">
+        min-width="350">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.title }}</span>
         </template>
@@ -43,7 +56,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -58,6 +71,9 @@
         </template>
       </el-table-column>
     </el-table>
+
+
+
 
     <div style="margin-top: 20px">
       <el-button type="danger" @click="deleteAll()">删除全部</el-button>
