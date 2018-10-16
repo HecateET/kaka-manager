@@ -8,6 +8,13 @@
       @selection-change="handleSelectionChange">
 
       <el-table-column
+        type="index">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column
         type="selection"
         width="55">
       </el-table-column>
@@ -67,19 +74,23 @@
         data() {
           return {
             tableData: [{
+              id:1,
               title:"最新明信片预售公告",
               date: '2016-05-02',
               name: '商品类',
             }, {
+              id:2,
               title:"活动公告活动公告",
               date: '2016-05-04',
               name: '公告类',
 
             }, {
+              id:3,
               title:"活动公告活动公告",
               date: '2016-05-01',
               name: '公告类',
             }, {
+              id:4,
               title:"活动公告活动公告",
               date: '2016-05-03',
               name: '公告类',
