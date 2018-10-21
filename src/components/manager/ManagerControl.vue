@@ -15,68 +15,76 @@
     </div>
     <el-table
       ref="multipleTable"
-      :data="tableData"
+      :data="activitys"
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange">
 
       <el-table-column
-        type="index"  width="55">
+        label="序号" type="index"  width="50">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.id }}</span>
+          <span style="margin-left: 10px">{{ scope.$index+1 }}</span>
         </template>
       </el-table-column>
 
+
       <el-table-column
         type="selection"
-        width="55">
+        width="50">
       </el-table-column>
 
       <el-table-column
         label="文章标题"
-        min-width="350">
+        min-width="340">
         <template slot-scope="scope">
-          <span style="margin-left: 10px">{{ scope.row.title }}</span>
+          <span style="margin-left: 10px">{{ scope.row.activityName }}</span>
         </template>
       </el-table-column>
+
+      <el-table-column
+        label="id"
+        min-width="50">
+        <template slot-scope="scope">
+          <span style="margin-left: 10px">{{ scope.row.activityId }}</span>
+        </template>
+      </el-table-column>
+
       <el-table-column
         label="日期"
-        width="200">
+        width="140">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          <span style="margin-left: 10px">{{ scope.row.activityStartDate }}</span>
         </template>
       </el-table-column>
       <el-table-column
         label="活动类型"
-        width="200">
+        width="120">
         <template slot-scope="scope">
           <div slot="reference" class="name-wrapper">
-            <el-tag size="medium">{{ scope.row.name }}</el-tag>
+            <el-tag type="info" v-if="scope.row.activityType=='商品'">{{ scope.row.activityType }}</el-tag>
+            <el-tag size="medium" v-if="scope.row.activityType=='公告'">{{ scope.row.activityType }}</el-tag>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="300">
+      <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">预览</el-button>
+            @click="handleEdit(scope.row.activityId, scope.row)">预览</el-button>
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.row.activityId, scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="deleteActivity(scope.$index,scope.row.activityId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-
-
-
     <div style="margin-top: 20px">
-      <el-button type="danger" @click="deleteAll()">删除全部</el-button>
+      <el-button type="danger" @click="deleteAll()">删除已选中</el-button>
       <el-button @click="toggleSelection()">取消选择</el-button>
     </div>
   </div>
@@ -89,36 +97,46 @@
         name: "ManagerControl",
         data() {
           return {
-            tableData: [{
-              id:1,
-              title:"最新明信片预售公告",
-              date: '2016-05-02',
-              name: '商品类',
-            }, {
-              id:2,
-              title:"活动公告活动公告",
-              date: '2016-05-04',
-              name: '公告类',
-
-            }, {
-              id:3,
-              title:"活动公告活动公告",
-              date: '2016-05-01',
-              name: '公告类',
-            }, {
-              id:4,
-              title:"活动公告活动公告",
-              date: '2016-05-03',
-              name: '公告类',
-            }],
+            activitys:[],
             multipleSelection: []
           }
         },
         methods: {
-          handleEdit(index, row) {
-            console.log(index, row);
+          deleteActivity(index,activityId) {
+            let _this = this;
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              _this.$ajax.get(`http://localhost:3000/manager/activityManagerment/delete/${activityId}`
+              ).then(function(result){
+                let data = result.data.data;
+                if(data.delete =='fail' && data.reject =='reject' ){
+                  _this.$message({
+                    type: 'warning',
+                    message: '改篇文章不允许删除!'
+                  });
+                }else if(data.delete =='success'){
+
+                  _this.activitys.splice(index,1);
+                  _this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+                  console.log('删除成功');
+                }
+              },function (err) {
+                console.log(err);
+              });
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });
+            });
           },
-          handleDelete(index, row) {
+          handleEdit(index, row) {
             console.log(index, row);
           },
           toggleSelection(rows) {
@@ -135,8 +153,22 @@
           },
           deleteAll(index,row){
             console.log();
-          }
+          },
+        },
+        mounted(){
+          let _this=this;
+          this.$ajax.post('http://localhost:3000/manager/activityManagerment'
+            ).then(function (result) {
+            _this.activitys = result.data.data;
+            console.log(_this.activitys);
+          },function (err) {
+            console.log(err);
+          });
+        },
+        updated(){
+
         }
+
     }
 </script>
 
