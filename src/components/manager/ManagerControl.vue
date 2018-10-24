@@ -9,9 +9,9 @@
       </div>
     <hr>
     <div style="margin-top: 20px">
-      <el-button type="primary" plain @click="showAll()">全部</el-button>
-      <el-button type="primary" plain @click="showActivity()">活动类</el-button>
-      <el-button type="primary" plain @click="showShopping()">商品类</el-button>
+      <el-button type="primary"  plain @click="getAllActivitys()">全部</el-button>
+      <el-button type="primary" plain @click="getActivitys()">活动类</el-button>
+      <el-button type="primary" plain @click="getActivitysGood()">商品类</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -51,7 +51,7 @@
 
       <el-table-column
         label="日期"
-        width="140">
+        width="150">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.activityStartDate }}</span>
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+
     export default {
         name: "ManagerControl",
         data() {
@@ -102,6 +103,43 @@
           }
         },
         methods: {
+          datachang(){
+            let item = this.activitys;
+            for(let i in item) {
+              var time = item[i].activityStartDate;
+              var d = new Date(time);
+              var times = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+              item[i].activityStartDate = times;
+            }
+          },
+          getAllActivitys(){
+            let _this=this;
+            this.$ajax.post('http://localhost:3000/manager/activityManagerment'
+            ).then(function (result) {
+              _this.activitys = result.data.data;
+              _this.datachang();
+            },function (err) {
+              console.log(err);
+            });
+          },
+          getActivitysGood(){
+            var _this = this;
+            this.$ajax.get('http://localhost:3000/manager/activityManagerment/classfic/商品').then(function (result) {
+              _this.activitys = result.data.data;
+              _this.datachang();
+            },function (err) {
+              console.log(err);
+            })
+          },
+          getActivitys(){
+            var _this = this;
+            this.$ajax.get('http://localhost:3000/manager/activityManagerment/classfic/公告').then(function (result) {
+              _this.activitys = result.data.data;
+              _this.datachang();
+            },function (err) {
+              console.log(err);
+            })
+          },
           deleteActivity(index,activityId) {
             let _this = this;
             this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -156,14 +194,7 @@
           },
         },
         mounted(){
-          let _this=this;
-          this.$ajax.post('http://localhost:3000/manager/activityManagerment'
-            ).then(function (result) {
-            _this.activitys = result.data.data;
-            console.log(_this.activitys);
-          },function (err) {
-            console.log(err);
-          });
+          this.getAllActivitys();
         },
         updated(){
 
