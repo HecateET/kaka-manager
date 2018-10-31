@@ -282,6 +282,7 @@
           'list',  // 列表
           'justify',  // 对齐方式
           'quote',  // 引用
+          'image',  // 插入图片
           'emoticon',  // 表情
           'table',  // 表格
           'undo',  // 撤销
@@ -289,6 +290,18 @@
         ];
         //配置服务器端地址
         //editor.customConfig.uploadImgServer = 'http://localhost:3000/activityEdit';
+        editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+        editor.customConfig.uploadImgServer = `http://localhost:3000/manager/activityImageUpload`; // 上传图片到服务器
+        editor.customConfig.uploadImgHooks = {
+          customInsert:function (insertImg,result,editor) {
+            if(result.errno ==0){
+              console.log('insert ok!');
+              insertImg('http://localhost:3000/activityEdit/'+result.data[0]);
+            }else{
+              alert("图片上传失败！");
+            }
+          }
+        }
         editor.create();
       },
       //时间格式转换
