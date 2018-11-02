@@ -114,7 +114,7 @@
           },
           getAllActivitys(){
             let _this=this;
-            this.$ajax.post('http://localhost:3000/manager/activityManagerment'
+            this.$ajax.post(`http://localhost:3000/manager/activityManagerment`
             ).then(function (result) {
               _this.activitys = result.data.data;
               _this.datachang();
@@ -124,7 +124,7 @@
           },
           getActivitysGood(){
             var _this = this;
-            this.$ajax.get('http://localhost:3000/manager/activityManagerment/classfic/商品').then(function (result) {
+            this.$ajax.get(`http://localhost:3000/manager/activityManagerment/classfic/商品`).then(function (result) {
               _this.activitys = result.data.data;
               _this.datachang();
             },function (err) {
@@ -133,7 +133,7 @@
           },
           getActivitys(){
             var _this = this;
-            this.$ajax.get('http://localhost:3000/manager/activityManagerment/classfic/公告').then(function (result) {
+            this.$ajax.get(`http://localhost:3000/manager/activityManagerment/classfic/公告`).then(function (result) {
               _this.activitys = result.data.data;
               _this.datachang();
             },function (err) {

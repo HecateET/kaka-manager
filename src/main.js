@@ -5,13 +5,15 @@ import App from './App'
 import router from './router'
 import store from './store.js'
 
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 import Element from 'element-ui';
-Vue.use(Element, { size: 'small', zIndex: 3000 })
+Vue.use(Element, { size: 'small', zIndex: 3000 });
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
 
 /* eslint-disable no-new */
 new Vue({

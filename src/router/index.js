@@ -11,7 +11,8 @@ import ManagerRight from '@/components/manager/ManagerRight'
 import ManagerLogin from '@/components/login/ManagerLogin'
 
 Vue.prototype.$ajax = axios;
-Vue.use(Router)
+
+Vue.use(Router);
 
 export default new Router({
   mode:'history',

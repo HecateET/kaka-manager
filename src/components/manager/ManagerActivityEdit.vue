@@ -9,31 +9,61 @@
     </div>
     <hr>
     <div style="margin: 10px">公告类活动发布</div>
-    <div class="form-box">
-      <el-form ref="form" :model="activityEdit" label-width="80px" size="mini">
-        <el-form-item label="文章名称">
-          <el-input v-model="activityEdit.title"></el-input>
-        </el-form-item>
-        <el-form-item label="文章类型">
-          <el-select v-model="activityEdit.type" placeholder="请选择发布活动的类型">
-            <el-option label="公告类" value="公告"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="发布时间">
-          <el-col :span="11">
-            <el-date-picker type="datetime" placeholder="选择日期" v-model="activityEdit.date" style="width: 100%;"></el-date-picker>
-          </el-col>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-row>
+      <el-col :span="12">
+        <div class="form-box">
+          <el-row>
+            <el-col :span="16">
+              <el-form ref="form" :model="activityEdit" label-width="80px" size="mini">
+                <el-form-item label="文章名称">
+                  <el-input v-model="activityEdit.title"></el-input>
+                </el-form-item>
+                <el-form-item label="文章类型">
+                  <el-select v-model="activityEdit.type" placeholder="请选择发布活动的类型">
+                    <el-option label="公告类" value="公告"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="发布时间">
+                  <el-col :span="11">
+                    <el-date-picker type="datetime" placeholder="选择日期" v-model="activityEdit.date" style="width: 100%;"></el-date-picker>
+                  </el-col>
+                </el-form-item>
+              </el-form>
+            </el-col>
+            <el-col :span="span=8">
+            </el-col>
+          </el-row>
+        </div>
+      </el-col>
+      <el-col :span="12">
+        <div id="myPic">
+          <img :src="headpic" alt="" id="loginHead" class="img-responsive" form="updateHead">
+          <div id="myFile">
+            <input type="file"
+                   name="avatar"
+                   @change="saveImage($event)"
+                   accept="image/gif,image/jpeg,image/jpg,image/png"
+                   ref="avatarInput"
+                   class="btn"/>
+          </div>
+        </div>
+        <div style="padding-left: 35px; padding-top: 5px">
+          <span style="color: #5E5E5E" v-if="!isSaveHead">点击上传图片</span>
+        </div>
+      </el-col>
+    </el-row>
+
+    <hr>
      <div>
-      <div ref="editor" style=" width: 700px;text-align:left"></div>
-    </div>
+      <div ref="editor" style=" width: 900px;text-align:left"></div>
+     </div>
     <hr>
     <el-row>
+      <!--<button type="button" @click="publish">发布</button>-->
         <el-button v-on:click="publish()" type="primary">发布</el-button>
         <el-button v-on:click="cancelPublish()" type="danger">取消</el-button>
     </el-row>
+
 
   </div>
 </template>
@@ -51,6 +81,9 @@
             type: '公告',
             date: '',
           },
+          upath:'',  //保存选中的文件
+          headpic: "",
+          isSaveHead: false,
         };
       },
     methods: {
@@ -60,6 +93,7 @@
         editor.customConfig.onchange = (html)=>{
           this.editorContent = html;
         };
+        editor.customConfig.zIndex = 1000;
         editor.customConfig.colors = [
           '#000000',
           '#eeece0',
@@ -296,7 +330,7 @@
           customInsert:function (insertImg,result,editor) {
             if(result.errno ==0){
               console.log('insert ok!');
-              insertImg('http://localhost:3000/activityEdit/'+result.data[0]);
+              insertImg(`http://localhost:3000/activityEdit/${result.data[0]}`);
             }else{
               alert("图片上传失败！");
             }
@@ -315,35 +349,62 @@
       },
       //发布文章
       publish:function(){
-        var _this = this;
-        if(this.activityEdit.title==''){
-          alert('文章标题不能为空！');
-        }else if(this.activityEdit.type==''){
-          alert('文章类型未选择，请选择！');
-        }else if(this.activityEdit.date==''){
-          alert('发布时间未选择，请填写！');
-        }else if(this.editorContent==''){
-          alert('文章内容为填写，请补充！');
-        } else{
-          let date = this.changeTime(this.activityEdit.date);
-          this.$ajax.post('http://localhost:3000/manager/activityEdit',{
-            acName:_this.activityEdit.title,
-            acStartDate:date,
-            acType:_this.activityEdit.type,
-            acDetails:_this.editorContent
-          }).then(function (result) {
+          let _this = this;
+          if(this.activityEdit.title==''){
+            alert('文章标题不能为空！');
+          }else if(this.activityEdit.type ==''){
+            alert('文章类型未选择，清选择');
+          }else if(this.activityEdit.date ==''){
+            alert('时间未选择，请填写');
+          }else if(this.editorContent ==''){
+            alert('文章内容未填写，请补充！')
+          }else if(this.upath ==''){
+            alert("单站图片未上传！")
+          }else{
+            let date = this.changeTime(this.activityEdit.date);
+            var zipFormData = new FormData();
+            zipFormData.append('filename',this.upath[0]);
+            zipFormData.append('acName',this.activityEdit.title);
+            zipFormData.append('acStartDate',date);
+            zipFormData.append('acType',this.activityEdit.type);
+            zipFormData.append('acDetails',this.editorContent);
+            let config = {
+              headers:{'Content-Type':'multipart/form-data'}
+            };
+            // setTimeout(()=>{
+              this.$ajax.post(`http://localhost:3000/manager/activityEdit`
+                ,zipFormData,config).then(function (response) {
+                console.log(response);
+                console.log(response.data);
+              });
+            // },100);
             alert("文章发布成功！");
             _this.activityEdit.title = '';
             _this.activityEdit.type = '公告';
             _this.activityEdit.date = '';
-            _this.editorContent = ' ';
-            console.log('插入成功：'+result.data.data);
-          },function (err) {
-            console.log(err);
-          })
-        }
+            _this.editorContenttent = '';
+            location.href ='/managercontrol';
+          }
 
-        },
+
+
+      },
+
+      saveImage(e) {
+        this.upath = e.target.files;
+        var inputFile = document.querySelector("[type='file']");
+        var reader = new FileReader();
+        console.log(this.upath);
+        console.log(this.upath[0]);
+        reader.onload = function(event) {
+          document.querySelector("img").src = `${event.target.result}`;
+          document.querySelector("#myPic").style.backgroundColor = "transparent";
+        };
+        reader.readAsDataURL(inputFile.files[0]);
+        this.isSaveHead = true;
+      },
+
+
     },
       mounted(){
          this.createEdioter();
@@ -352,10 +413,43 @@
 </script>
 
 <style scoped>
+  #oDiv{
+    height:200px;
+    width:200px;
+    border:1px solid #000;
+    text-align: center;
+    margin-bottom: 10px;
+  }
   .form-box{
-    width: 500px;
+    width: 700px;
   }
-  .el-picker-panel,.el-date-picker,.el-popper{
-    z-index:20000 !important;
+  #myPic {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #606266;
   }
+
+  #myFile {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #606266;
+    background-color: rgba(204,204,204,0.2);
+
+    box-sizing: border-box;
+    position: absolute;
+    top: -1px;
+    /*display: none;*/
+  }
+
+  #myPic:hover #myFile {
+    display: block;
+  }
+
+  [type = "file"] {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+
+
 </style>
