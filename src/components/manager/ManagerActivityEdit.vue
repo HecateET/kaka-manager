@@ -4,11 +4,11 @@
       <el-breadcrumb separator-class="el-icon-arrow-right" class="bread">
         <el-breadcrumb-item :to="{ path: '/control' }"><i class="el-icon-upload"></i>&nbsp;控制台</el-breadcrumb-item>
         <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        <el-breadcrumb-item>活动发布</el-breadcrumb-item>
+        <el-breadcrumb-item>文章发布</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <hr>
-    <div style="margin: 10px">公告类活动发布</div>
+    <div style="margin: 10px">编辑</div>
     <el-row>
       <el-col :span="12">
         <div class="form-box">
@@ -18,11 +18,11 @@
                 <el-form-item label="文章名称">
                   <el-input v-model="activityEdit.title"></el-input>
                 </el-form-item>
-                <el-form-item label="文章类型">
-                  <el-select v-model="activityEdit.type" placeholder="请选择发布活动的类型">
-                    <el-option label="公告类" value="公告"></el-option>
-                  </el-select>
-                </el-form-item>
+                <!--<el-form-item label="文章类型">-->
+                  <!--<el-select v-model="activityEdit.type" placeholder="请选择发布活动的类型">-->
+                    <!--<el-option label="公告类" value="公告"></el-option>-->
+                  <!--</el-select>-->
+                <!--</el-form-item>-->
                 <el-form-item label="发布时间">
                   <el-col :span="11">
                     <el-date-picker type="datetime" placeholder="选择日期" v-model="activityEdit.date" style="width: 100%;"></el-date-picker>
@@ -352,8 +352,6 @@
           let _this = this;
           if(this.activityEdit.title==''){
             alert('文章标题不能为空！');
-          }else if(this.activityEdit.type ==''){
-            alert('文章类型未选择，清选择');
           }else if(this.activityEdit.date ==''){
             alert('时间未选择，请填写');
           }else if(this.editorContent ==''){
@@ -404,6 +402,7 @@
         this.isSaveHead = true;
       },
 
+      //修改文章
 
     },
       mounted(){

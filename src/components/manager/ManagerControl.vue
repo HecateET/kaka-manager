@@ -8,11 +8,11 @@
         </el-breadcrumb>
       </div>
     <hr>
-    <div style="margin-top: 20px">
-      <el-button type="primary"  plain @click="getAllActivitys()">全部</el-button>
-      <el-button type="primary" plain @click="getActivitys()">活动类</el-button>
-      <el-button type="primary" plain @click="getActivitysGood()">商品类</el-button>
-    </div>
+    <!--<div style="margin-top: 20px">-->
+      <!--<el-button type="primary"  plain @click="getAllActivitys()">全部</el-button>-->
+      <!--<el-button type="primary" plain @click="getActivitys()">活动类</el-button>-->
+      <!--<el-button type="primary" plain @click="getActivitysGood()">商品类</el-button>-->
+    <!--</div>-->
     <el-table
       ref="multipleTable"
       :data="activitys"
@@ -43,7 +43,7 @@
 
       <el-table-column
         label="id"
-        min-width="50">
+        min-width="65">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.activityId }}</span>
         </template>
@@ -51,22 +51,22 @@
 
       <el-table-column
         label="日期"
-        width="150">
+        width="200">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.activityStartDate }}</span>
         </template>
       </el-table-column>
-      <el-table-column
-        label="活动类型"
-        width="120">
-        <template slot-scope="scope">
-          <div slot="reference" class="name-wrapper">
-            <el-tag type="info" v-if="scope.row.activityType=='商品'">{{ scope.row.activityType }}</el-tag>
-            <el-tag size="medium" v-if="scope.row.activityType=='公告'">{{ scope.row.activityType }}</el-tag>
-          </div>
-        </template>
-      </el-table-column>
+      <!--<el-table-column-->
+        <!--label="活动类型"-->
+        <!--width="120">-->
+        <!--<template slot-scope="scope">-->
+          <!--<div slot="reference" class="name-wrapper">-->
+            <!--<el-tag type="info" v-if="scope.row.activityType=='商品'">{{ scope.row.activityType }}</el-tag>-->
+            <!--<el-tag size="medium" v-if="scope.row.activityType=='公告'">{{ scope.row.activityType }}</el-tag>-->
+          <!--</div>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <el-button

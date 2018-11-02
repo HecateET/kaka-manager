@@ -27,7 +27,7 @@
             </router-link>
           </el-menu-item-group>
           <el-menu-item-group>
-            <template slot="title">活动发布</template>
+            <template slot="title">文章发布</template>
               <router-link role="presentation" to="/managerActivityEdit" tag="li">
                 <el-menu-item index="2-2">编辑文章</el-menu-item>
               </router-link>
@@ -37,10 +37,10 @@
           </el-menu-item-group>
         </el-submenu>
 
-        <el-menu-item index="3">
-          <i class="el-icon-menu"></i>
-          <span slot="title">商品管理</span>
-        </el-menu-item>
+        <!--<el-menu-item index="3">-->
+          <!--<i class="el-icon-menu"></i>-->
+          <!--<span slot="title">商品管理</span>-->
+        <!--</el-menu-item>-->
 
       </el-menu>
     </el-col>
