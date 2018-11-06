@@ -8,7 +8,6 @@
       </el-breadcrumb>
     </div>
     <hr>
-    <div style="margin: 10px">编辑</div>
     <el-row>
       <el-col :span="12">
         <div class="form-box">
@@ -48,7 +47,7 @@
           </div>
         </div>
         <div style="padding-left: 35px; padding-top: 5px">
-          <span style="color: #5E5E5E" v-if="!isSaveHead">点击上传图片</span>
+          <span style="color: #9a9999" v-if="!isSaveHead">点击上传图片</span>
         </div>
       </el-col>
     </el-row>
@@ -60,7 +59,8 @@
     <hr>
     <el-row>
       <!--<button type="button" @click="publish">发布</button>-->
-        <el-button v-on:click="publish()" type="primary">发布</el-button>
+        <el-button v-on:click="publish()" type="primary" v-if="activityId==''">发布</el-button>
+        <el-button v-on:click="updataEdit()" type="primary" v-else>修改</el-button>
         <el-button v-on:click="cancelPublish()" type="danger">取消</el-button>
     </el-row>
 
@@ -82,13 +82,36 @@
             date: '',
           },
           upath:'',  //保存选中的文件
-          headpic: "",
+          headpic:'',
           isSaveHead: false,
+          activityId:"",
         };
       },
+    watch:{
+      "$route":"getActivity"
+    },
     methods: {
+      getActivity(editor){
+        if(this.$route.params.activityId != undefined){
+          this.activityId = this.$route.params.activityId;
+          console.log(this.activityId);
+          let _this =  this;
+          this.$ajax.get(`${this.$store.state.baseURL}/manager/activityManagerment/message/${this.activityId}`)
+            .then(function (result) {
+              console.log(result.data.data);
+              _this.activityEdit.title =result.data.data[0].activityName;
+              _this.activityEdit.date = result.data.data[0].activityStartDate;
+              _this.headpic = `${axios.defaults.baseURL}${result.data.data[0].activityImage}`;
+              var content = result.data.data[0].activityDetails;
+              editor.txt.html(content);
+            },function (err) {
+              console.log(err);
+            })
+        }
+      },
       //创建富文本编辑器
       createEdioter(){
+        let _this =this;
         var editor = new E(this.$refs.editor);
         editor.customConfig.onchange = (html)=>{
           this.editorContent = html;
@@ -119,175 +142,175 @@
             content: [
               {
                 alt:'[吃瓜]',
-                src:'http://localhost:3000/eoim/1.png'
+                src:`${this.$store.state.baseURL}/eoim/1.png`
               },
               {
                 alt:'[哭笑]',
-                src:'http://localhost:3000/eoim/2.png'
+                src:`${this.$store.state.baseURL}/eoim/2.png`
               },
               {
                 alt:'[坏笑]',
-                src:'http://localhost:3000/eoim/3.png'
+                src:`${this.$store.state.baseURL}/eoim/3.png`
               },
               {
                 alt:'[苦笑]',
-                src:'http://localhost:3000/eoim/4.png'
+                src:`${this.$store.state.baseURL}/eoim/4.png`
               },
               {
                 alt:'[嘴馋]',
-                src:'http://localhost:3000/eoim/5.png'
+                src:`${this.$store.state.baseURL}/eoim/5.png`
               },
               {
                 alt:'[你好]',
-                src:'http://localhost:3000/eoim/6.png'
+                src:`${this.$store.state.baseURL}/eoim/6.png`
               },
               {
                 alt:'[右哼哼]',
-                src:'http://localhost:3000/eoim/7.png'
+                src:`${this.$store.state.baseURL}/eoim/7.png`
               },
               {
                 alt:'[左哼哼]',
-                src:'http://localhost:3000/eoim/8.png'
+                src:`${this.$store.state.baseURL}/eoim/8.png`
               },
               {
                 alt:'[吃瓜]',
-                src:'http://localhost:3000/eoim/9.png'
+                src:`${this.$store.state.baseURL}/eoim/9.png`
               },
               {
                 alt:'[大骂]',
-                src:'http://localhost:3000/eoim/10.png'
+                src:`${this.$store.state.baseURL}/eoim/10.png`
               },
               {
                 alt:'[微笑]',
-                src:'http://localhost:3000/eoim/11.png'
+                src:`${this.$store.state.baseURL}/eoim/11.png`
               },
               {
                 alt:'[色]',
-                src:'http://localhost:3000/eoim/12.png'
+                src:`${this.$store.state.baseURL}/eoim/12.png`
               },
               {
                 alt:'[亲亲]',
-                src:'http://localhost:3000/eoim/13.png'
+                src:`${this.$store.state.baseURL}/eoim/13.png`
               },
               {
                 alt:'[卖萌]',
-                src:'http://localhost:3000/eoim/14.png'
+                src:`${this.$store.state.baseURL}/eoim/14.png`
               },
               {
                 alt:'[调皮]',
-                src:'http://localhost:3000/eoim/15.png'
+                src:`${this.$store.state.baseURL}/eoim/15.png`
               },
               {
                 alt:'[倒霉]',
-                src:'http://localhost:3000/eoim/16.png'
+                src:`${this.$store.state.baseURL}/eoim/16.png`
               },
               {
                 alt:'[生病]',
-                src:'http://localhost:3000/eoim/17.png'
+                src:`${this.$store.state.baseURL}/eoim/17.png`
               },
               {
                 alt:'[吃瓜]',
-                src:'http://localhost:3000/eoim/18.png'
+                src:`${this.$store.state.baseURL}/eoim/18.png`
               },
               {
                 alt:'[可怜]',
-                src:'http://localhost:3000/eoim/19.png'
+                src:`${this.$store.state.baseURL}/eoim/19.png`
               },
               {
                 alt:'[汗]',
-                src:'http://localhost:3000/eoim/20.png'
+                src:`${this.$store.state.baseURL}/eoim/20.png`
               },
               {
                 alt:'[色色]',
-                src:'http://localhost:3000/eoim/21.png'
+                src:`${this.$store.state.baseURL}/eoim/21.png`
               },
               {
                 alt:'[哈哈]',
-                src:'http://localhost:3000/eoim/22.png'
+                src:`${this.$store.state.baseURL}/eoim/22.png`
               },
               {
                 alt:'[钱]',
-                src:'http://localhost:3000/eoim/23.png'
+                src:`${this.$store.state.baseURL}/eoim/23.png`
               },
               {
                 alt:'[思考]',
-                src:'http://localhost:3000/eoim/24.png'
+                src:`${this.$store.state.baseURL}/eoim/24.png`
               },
               {
                 alt:'[生病]',
-                src:'http://localhost:3000/eoim/25.png'
+                src:`${this.$store.state.baseURL}/eoim/25.png`
               },
               {
                 alt:'[困]',
-                src:'http://localhost:3000/eoim/26.png'
+                src:`${this.$store.state.baseURL}/eoim/26.png`
               },
               {
                 alt:'[互粉]',
-                src:'http://localhost:3000/eoim/27.png'
+                src:`${this.$store.state.baseURL}/eoim/27.png`
               },
               {
                 alt:'[瞌睡]',
-                src:'http://localhost:3000/eoim/28.png'
+                src:`${this.$store.state.baseURL}/eoim/28.png`
               },
               {
                 alt:'[机智]',
-                src:'http://localhost:3000/eoim/29.png'
+                src:`${this.$store.state.baseURL}/eoim/29.png`
               },
               {
                 alt:'[害羞]',
-                src:'http://localhost:3000/eoim/30.png'
+                src:`${this.$store.state.baseURL}/eoim/30.png`
               },
               {
                 alt:'[鼻孔]',
-                src:'http://localhost:3000/eoim/31.png'
+                src:`${this.$store.state.baseURL}/eoim/31.png`
               },
               {
                 alt:'[疑惑]',
-                src:'http://localhost:3000/eoim/32.png'
+                src:`${this.$store.state.baseURL}/eoim/32.png`
               },
               {
                 alt:'[大哭]',
-                src:'http://localhost:3000/eoim/33.png'
+                src:`${this.$store.state.baseURL}/eoim/33.png`
               },
               {
                 alt:'[打你]',
-                src:'http://localhost:3000/eoim/34.png'
+                src:`${this.$store.state.baseURL}/eoim/34.png`
               },
               {
                 alt:'[挣扎]',
-                src:'http://localhost:3000/eoim/35.png'
+                src:`${this.$store.state.baseURL}/eoim/35.png`
               },
               {
                 alt:'[大笑]',
-                src:'http://localhost:3000/eoim/36.png'
+                src:`${this.$store.state.baseURL}/eoim/36.png`
               },
               {
                 alt:'[吃惊]',
-                src:'http://localhost:3000/eoim/37.png'
+                src:`${this.$store.state.baseURL}/eoim/37.png`
               },
               {
                 alt:'[晕乎]',
-                src:'http://localhost:3000/eoim/38.png'
+                src:`${this.$store.state.baseURL}/eoim/38.png`
               },
               {
                 alt:'[鄙视]',
-                src:'http://localhost:3000/eoim/39.png'
+                src:`${this.$store.state.baseURL}/eoim/39.png`
               },
               {
                 alt:'[嫌弃]',
-                src:'http://localhost:3000/eoim/40.png'
+                src:`${this.$store.state.baseURL}/eoim/40.png`
               },
               {
                 alt:'[哈欠]',
-                src:'http://localhost:3000/eoim/41.png'
+                src:`${this.$store.state.baseURL}/eoim/41.png`
               },
               {
                 alt:'[哭]',
-                src:'http://localhost:3000/eoim/42.png'
+                src:`${this.$store.state.baseURL}/eoim/42.png`
               },
               {
                 alt:'[生气]',
-                src:'http://localhost:3000/eoim/43.png'
+                src:`${this.$store.state.baseURL}/eoim/43.png`
               },
             ]
           },
@@ -325,28 +348,34 @@
         //配置服务器端地址
         //editor.customConfig.uploadImgServer = 'http://localhost:3000/activityEdit';
         editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
-        editor.customConfig.uploadImgServer = `http://localhost:3000/manager/activityImageUpload`; // 上传图片到服务器
+        editor.customConfig.uploadImgServer = `${this.$store.state.baseURL}/manager/activityImageUpload`; // 上传图片到服务器
         editor.customConfig.uploadImgHooks = {
           customInsert:function (insertImg,result,editor) {
             if(result.errno ==0){
               console.log('insert ok!');
-              insertImg(`http://localhost:3000/activityEdit/${result.data[0]}`);
+              insertImg(`${_this.$store.state.baseURL}/activityEdit/${result.data[0]}`);
             }else{
               alert("图片上传失败！");
             }
           }
         }
         editor.create();
-      },
-      //时间格式转换
-      changeTime(d){
-            let date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
-            return date;
-          },
-      //取消发布
-      cancelPublish(){
+        this.getActivity(editor);
 
       },
+
+      //时间格式转换
+      changeTime(d){
+        let date;
+        if((typeof d) =='object'){
+          date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+        }else {
+          d = new Date(d);
+          date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+        }
+        return date;
+      },
+
       //发布文章
       publish:function(){
           let _this = this;
@@ -370,7 +399,7 @@
               headers:{'Content-Type':'multipart/form-data'}
             };
             // setTimeout(()=>{
-              this.$ajax.post(`http://localhost:3000/manager/activityEdit`
+              this.$ajax.post(`${this.$store.state.baseURL}/manager/activityEdit`
                 ,zipFormData,config).then(function (response) {
                 console.log(response);
                 console.log(response.data);
@@ -401,9 +430,47 @@
         reader.readAsDataURL(inputFile.files[0]);
         this.isSaveHead = true;
       },
-
-      //修改文章
-
+      //修改文章保存
+      updataEdit() {
+        let _this = this;
+        if (this.activityEdit.title == '') {
+          alert('文章标题不能为空！');
+        } else if (this.activityEdit.date == '') {
+          alert('时间未选择，请填写');
+        } else if (this.editorContent == '') {
+          alert('文章内容未填写，请补充！')
+        } else if (this.upath == '') {
+          alert("单站图片未上传！")
+        } else {
+          console.log(typeof this.activityEdit.date)
+          console.log(this.activityEdit.date);
+          let date = this.changeTime(this.activityEdit.date);
+          console.log(typeof date);
+          console.log(date);
+          var zipFormData = new FormData();
+          zipFormData.append('filename', this.upath[0]);
+          zipFormData.append('acName', this.activityEdit.title);
+          zipFormData.append('acStartDate',date);
+          zipFormData.append('acType', this.activityEdit.type);
+          zipFormData.append('acDetails', this.editorContent);
+          zipFormData.append('activityId', this.activityId);
+          let config = {
+            headers: {'Content-Type': 'multipart/form-data'}
+          };
+          // setTimeout(()=>{
+          this.$ajax.post(`${this.$store.state.baseURL}/manager/activityManagerment/update`
+            , zipFormData, config).then(function (response) {
+            console.log(response);
+            console.log(response.data);
+          });
+          alert("文章修改成功！");
+          _this.activityEdit.title = '';
+          _this.activityEdit.type = '公告';
+          _this.activityEdit.date = '';
+          _this.editorContenttent = '';
+          location.href = '/managercontrol';
+        }
+      },
     },
       mounted(){
          this.createEdioter();
@@ -423,15 +490,15 @@
     width: 700px;
   }
   #myPic {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #606266;
+    width: 230px;
+    height: 160px;
+    border: 1px solid #dcdfe6;
   }
 
   #myFile {
-    width: 150px;
-    height: 150px;
-    border: 1px solid #606266;
+    width: 230px;
+    height: 160px;
+    border: 1px solid #dcdfe6;
     background-color: rgba(204,204,204,0.2);
 
     box-sizing: border-box;

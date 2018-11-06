@@ -14,7 +14,6 @@ Vue.use(Element, { size: 'small', zIndex: 3000 });
 
 Vue.config.productionTip = false;
 
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

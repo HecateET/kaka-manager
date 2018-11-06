@@ -14,7 +14,7 @@ Vue.prototype.$ajax = axios;
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode:'history',
   routes: [
     {
@@ -37,11 +37,16 @@ export default new Router({
           name:'ManagerControl',
           component:ManagerControl
         },
-        {
-          path:'managerActivityEdit',
-          name:'ManagerActivityEdit',
-          component:ManagerActivityEdit
-        },
+        // {
+        //   path:'managerActivityEdit',
+        //   name:'ManagerActivityEdit',
+        //   component:ManagerActivityEdit
+        // },
+        {path: "managerActivityEdit",name:'ManagerActivityEdit', component: ManagerActivityEdit,children:[
+            {path:"",component:ManagerActivityEdit},
+            {path:":activityId",component:ManagerActivityEdit}
+          ]},
+
         {
           path:'managerCommodityEdit',
           name:'ManagerCommodityEdit',
@@ -53,7 +58,28 @@ export default new Router({
       path:'/managerLogin',
       name:'ManagerLogin',
       component:ManagerLogin
-    }
+    },
+    {
+      path: '**',   // 错误路由
+      redirect: '/control'   //重定向
+    },
   ],
-
-})
+});
+// //全局路由守卫
+router.beforeEach((to, from, next) => {
+  const nextRoute =['controlfirst','ManagerBody','control','ManagerControl','ManagerActivityEdit','ManagerCommodityEdit']
+  let isLogin = localStorage.getItem("managerId");
+  if(nextRoute.indexOf(to.name)>=0){
+    if(!isLogin){
+      console.log('请先登录');
+      router.push({name:'ManagerLogin'});
+    }
+  }
+  if(to.name ==='ManagerLogin'){
+    if(isLogin){
+      router.push({name:'ManagerControl'});
+    }
+  }
+  next();
+});
+export default router;

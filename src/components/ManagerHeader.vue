@@ -9,24 +9,23 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand text-color" href="#">LOGO</a>
-        <p class="navbar-text text-color">拾笺网站后台管理</p>
+        <!--<a class="navbar-brand text-color" href="#">LOGO</a>-->
+        <p class="navbar-text text-color">拾·笺 网站后台管理</p>
 
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"  v-if="isLogin">
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown text-color">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">欢迎使用，管理员 <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">欢迎使用，{{managerId}} <span class="caret"></span></a>
             <ul class="dropdown-menu ">
-              <li><a href="#"><span class="glyphicon glyphicon-cog icon-color" aria-hidden="true"></span>&nbsp;&nbsp;资料设置</a></li>
+              <!--<li><a href="#"><span class="glyphicon glyphicon-cog icon-color" aria-hidden="true"></span>&nbsp;&nbsp;资料设置</a></li>-->
               <li><a href="#"><span class="glyphicon glyphicon-user icon-color" aria-hidden="true"></span>&nbsp;&nbsp;修改密码</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#"><span class="glyphicon glyphicon-home icon-color" aria-hidden="true"></span>&nbsp;&nbsp;返回首页</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="#"><span class="glyphicon glyphicon-off icon-color" aria-hidden="true"></span>&nbsp;&nbsp;退出登录</a></li>
+              <!--<li role="separator" class="divider"></li>-->
+              <!--<li><a href="#"><span class="glyphicon glyphicon-home icon-color" aria-hidden="true"></span>&nbsp;&nbsp;返回首页</a></li>-->
+              <!--<li role="separator" class="divider"></li>-->
+              <li @click="loginOut()"><a href="/managerLogin"><span class="glyphicon glyphicon-off icon-color" aria-hidden="true"></span>&nbsp;&nbsp;退出登录</a></li>
             </ul>
           </li>
         </ul>
@@ -36,15 +35,17 @@
 </template>
 
 <script>
+  import {mapGetters} from "vuex"
     export default {
         name: "ManagerHeader",
-      computed:{
-        isLogin:{
-          get:function () {
-            return true;
-          }
-        },
-
+      computed: mapGetters([
+        "isLogin",
+        "managerId"
+      ]),
+      methods:{
+        loginOut(){
+          localStorage.clear();
+        }
       }
     }
 </script>
