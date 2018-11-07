@@ -101,7 +101,7 @@
               console.log(result.data.data);
               _this.activityEdit.title =result.data.data[0].activityName;
               _this.activityEdit.date = result.data.data[0].activityStartDate;
-              _this.headpic = `${axios.defaults.baseURL}${result.data.data[0].activityImage}`;
+              _this.headpic = `${_this.$store.state.baseURL}${result.data.data[0].activityImage}`;
               var content = result.data.data[0].activityDetails;
               editor.txt.html(content);
             },function (err) {
@@ -133,187 +133,187 @@
         ];
         // 表情面板可以有多个 tab ，因此要配置成一个数组。数组每个元素代表一个 tab 的配置
         editor.customConfig.emotions = [
-          {
-            // tab 的标题
-            title: '默认',
-            // type -> 'emoji' / 'image'
-            type: 'image',
-            // content -> 数组
-            content: [
-              {
-                alt:'[吃瓜]',
-                src:`${this.$store.state.baseURL}/eoim/1.png`
-              },
-              {
-                alt:'[哭笑]',
-                src:`${this.$store.state.baseURL}/eoim/2.png`
-              },
-              {
-                alt:'[坏笑]',
-                src:`${this.$store.state.baseURL}/eoim/3.png`
-              },
-              {
-                alt:'[苦笑]',
-                src:`${this.$store.state.baseURL}/eoim/4.png`
-              },
-              {
-                alt:'[嘴馋]',
-                src:`${this.$store.state.baseURL}/eoim/5.png`
-              },
-              {
-                alt:'[你好]',
-                src:`${this.$store.state.baseURL}/eoim/6.png`
-              },
-              {
-                alt:'[右哼哼]',
-                src:`${this.$store.state.baseURL}/eoim/7.png`
-              },
-              {
-                alt:'[左哼哼]',
-                src:`${this.$store.state.baseURL}/eoim/8.png`
-              },
-              {
-                alt:'[吃瓜]',
-                src:`${this.$store.state.baseURL}/eoim/9.png`
-              },
-              {
-                alt:'[大骂]',
-                src:`${this.$store.state.baseURL}/eoim/10.png`
-              },
-              {
-                alt:'[微笑]',
-                src:`${this.$store.state.baseURL}/eoim/11.png`
-              },
-              {
-                alt:'[色]',
-                src:`${this.$store.state.baseURL}/eoim/12.png`
-              },
-              {
-                alt:'[亲亲]',
-                src:`${this.$store.state.baseURL}/eoim/13.png`
-              },
-              {
-                alt:'[卖萌]',
-                src:`${this.$store.state.baseURL}/eoim/14.png`
-              },
-              {
-                alt:'[调皮]',
-                src:`${this.$store.state.baseURL}/eoim/15.png`
-              },
-              {
-                alt:'[倒霉]',
-                src:`${this.$store.state.baseURL}/eoim/16.png`
-              },
-              {
-                alt:'[生病]',
-                src:`${this.$store.state.baseURL}/eoim/17.png`
-              },
-              {
-                alt:'[吃瓜]',
-                src:`${this.$store.state.baseURL}/eoim/18.png`
-              },
-              {
-                alt:'[可怜]',
-                src:`${this.$store.state.baseURL}/eoim/19.png`
-              },
-              {
-                alt:'[汗]',
-                src:`${this.$store.state.baseURL}/eoim/20.png`
-              },
-              {
-                alt:'[色色]',
-                src:`${this.$store.state.baseURL}/eoim/21.png`
-              },
-              {
-                alt:'[哈哈]',
-                src:`${this.$store.state.baseURL}/eoim/22.png`
-              },
-              {
-                alt:'[钱]',
-                src:`${this.$store.state.baseURL}/eoim/23.png`
-              },
-              {
-                alt:'[思考]',
-                src:`${this.$store.state.baseURL}/eoim/24.png`
-              },
-              {
-                alt:'[生病]',
-                src:`${this.$store.state.baseURL}/eoim/25.png`
-              },
-              {
-                alt:'[困]',
-                src:`${this.$store.state.baseURL}/eoim/26.png`
-              },
-              {
-                alt:'[互粉]',
-                src:`${this.$store.state.baseURL}/eoim/27.png`
-              },
-              {
-                alt:'[瞌睡]',
-                src:`${this.$store.state.baseURL}/eoim/28.png`
-              },
-              {
-                alt:'[机智]',
-                src:`${this.$store.state.baseURL}/eoim/29.png`
-              },
-              {
-                alt:'[害羞]',
-                src:`${this.$store.state.baseURL}/eoim/30.png`
-              },
-              {
-                alt:'[鼻孔]',
-                src:`${this.$store.state.baseURL}/eoim/31.png`
-              },
-              {
-                alt:'[疑惑]',
-                src:`${this.$store.state.baseURL}/eoim/32.png`
-              },
-              {
-                alt:'[大哭]',
-                src:`${this.$store.state.baseURL}/eoim/33.png`
-              },
-              {
-                alt:'[打你]',
-                src:`${this.$store.state.baseURL}/eoim/34.png`
-              },
-              {
-                alt:'[挣扎]',
-                src:`${this.$store.state.baseURL}/eoim/35.png`
-              },
-              {
-                alt:'[大笑]',
-                src:`${this.$store.state.baseURL}/eoim/36.png`
-              },
-              {
-                alt:'[吃惊]',
-                src:`${this.$store.state.baseURL}/eoim/37.png`
-              },
-              {
-                alt:'[晕乎]',
-                src:`${this.$store.state.baseURL}/eoim/38.png`
-              },
-              {
-                alt:'[鄙视]',
-                src:`${this.$store.state.baseURL}/eoim/39.png`
-              },
-              {
-                alt:'[嫌弃]',
-                src:`${this.$store.state.baseURL}/eoim/40.png`
-              },
-              {
-                alt:'[哈欠]',
-                src:`${this.$store.state.baseURL}/eoim/41.png`
-              },
-              {
-                alt:'[哭]',
-                src:`${this.$store.state.baseURL}/eoim/42.png`
-              },
-              {
-                alt:'[生气]',
-                src:`${this.$store.state.baseURL}/eoim/43.png`
-              },
-            ]
-          },
+          // {
+          //   // tab 的标题
+          //   title: '默认',
+          //   // type -> 'emoji' / 'image'
+          //   type: 'image',
+          //   // content -> 数组
+          //   content: [
+          //     {
+          //       alt:'[吃瓜]',
+          //       src:`${this.$store.state.baseURL}/eoim/1.png`
+          //     },
+          //     {
+          //       alt:'[哭笑]',
+          //       src:`${this.$store.state.baseURL}/eoim/2.png`
+          //     },
+          //     {
+          //       alt:'[坏笑]',
+          //       src:`${this.$store.state.baseURL}/eoim/3.png`
+          //     },
+          //     {
+          //       alt:'[苦笑]',
+          //       src:`${this.$store.state.baseURL}/eoim/4.png`
+          //     },
+          //     {
+          //       alt:'[嘴馋]',
+          //       src:`${this.$store.state.baseURL}/eoim/5.png`
+          //     },
+          //     {
+          //       alt:'[你好]',
+          //       src:`${this.$store.state.baseURL}/eoim/6.png`
+          //     },
+          //     {
+          //       alt:'[右哼哼]',
+          //       src:`${this.$store.state.baseURL}/eoim/7.png`
+          //     },
+          //     {
+          //       alt:'[左哼哼]',
+          //       src:`${this.$store.state.baseURL}/eoim/8.png`
+          //     },
+          //     {
+          //       alt:'[吃瓜]',
+          //       src:`${this.$store.state.baseURL}/eoim/9.png`
+          //     },
+          //     {
+          //       alt:'[大骂]',
+          //       src:`${this.$store.state.baseURL}/eoim/10.png`
+          //     },
+          //     {
+          //       alt:'[微笑]',
+          //       src:`${this.$store.state.baseURL}/eoim/11.png`
+          //     },
+          //     {
+          //       alt:'[色]',
+          //       src:`${this.$store.state.baseURL}/eoim/12.png`
+          //     },
+          //     {
+          //       alt:'[亲亲]',
+          //       src:`${this.$store.state.baseURL}/eoim/13.png`
+          //     },
+          //     {
+          //       alt:'[卖萌]',
+          //       src:`${this.$store.state.baseURL}/eoim/14.png`
+          //     },
+          //     {
+          //       alt:'[调皮]',
+          //       src:`${this.$store.state.baseURL}/eoim/15.png`
+          //     },
+          //     {
+          //       alt:'[倒霉]',
+          //       src:`${this.$store.state.baseURL}/eoim/16.png`
+          //     },
+          //     {
+          //       alt:'[生病]',
+          //       src:`${this.$store.state.baseURL}/eoim/17.png`
+          //     },
+          //     {
+          //       alt:'[吃瓜]',
+          //       src:`${this.$store.state.baseURL}/eoim/18.png`
+          //     },
+          //     {
+          //       alt:'[可怜]',
+          //       src:`${this.$store.state.baseURL}/eoim/19.png`
+          //     },
+          //     {
+          //       alt:'[汗]',
+          //       src:`${this.$store.state.baseURL}/eoim/20.png`
+          //     },
+          //     {
+          //       alt:'[色色]',
+          //       src:`${this.$store.state.baseURL}/eoim/21.png`
+          //     },
+          //     {
+          //       alt:'[哈哈]',
+          //       src:`${this.$store.state.baseURL}/eoim/22.png`
+          //     },
+          //     {
+          //       alt:'[钱]',
+          //       src:`${this.$store.state.baseURL}/eoim/23.png`
+          //     },
+          //     {
+          //       alt:'[思考]',
+          //       src:`${this.$store.state.baseURL}/eoim/24.png`
+          //     },
+          //     {
+          //       alt:'[生病]',
+          //       src:`${this.$store.state.baseURL}/eoim/25.png`
+          //     },
+          //     {
+          //       alt:'[困]',
+          //       src:`${this.$store.state.baseURL}/eoim/26.png`
+          //     },
+          //     {
+          //       alt:'[互粉]',
+          //       src:`${this.$store.state.baseURL}/eoim/27.png`
+          //     },
+          //     {
+          //       alt:'[瞌睡]',
+          //       src:`${this.$store.state.baseURL}/eoim/28.png`
+          //     },
+          //     {
+          //       alt:'[机智]',
+          //       src:`${this.$store.state.baseURL}/eoim/29.png`
+          //     },
+          //     {
+          //       alt:'[害羞]',
+          //       src:`${this.$store.state.baseURL}/eoim/30.png`
+          //     },
+          //     {
+          //       alt:'[鼻孔]',
+          //       src:`${this.$store.state.baseURL}/eoim/31.png`
+          //     },
+          //     {
+          //       alt:'[疑惑]',
+          //       src:`${this.$store.state.baseURL}/eoim/32.png`
+          //     },
+          //     {
+          //       alt:'[大哭]',
+          //       src:`${this.$store.state.baseURL}/eoim/33.png`
+          //     },
+          //     {
+          //       alt:'[打你]',
+          //       src:`${this.$store.state.baseURL}/eoim/34.png`
+          //     },
+          //     {
+          //       alt:'[挣扎]',
+          //       src:`${this.$store.state.baseURL}/eoim/35.png`
+          //     },
+          //     {
+          //       alt:'[大笑]',
+          //       src:`${this.$store.state.baseURL}/eoim/36.png`
+          //     },
+          //     {
+          //       alt:'[吃惊]',
+          //       src:`${this.$store.state.baseURL}/eoim/37.png`
+          //     },
+          //     {
+          //       alt:'[晕乎]',
+          //       src:`${this.$store.state.baseURL}/eoim/38.png`
+          //     },
+          //     {
+          //       alt:'[鄙视]',
+          //       src:`${this.$store.state.baseURL}/eoim/39.png`
+          //     },
+          //     {
+          //       alt:'[嫌弃]',
+          //       src:`${this.$store.state.baseURL}/eoim/40.png`
+          //     },
+          //     {
+          //       alt:'[哈欠]',
+          //       src:`${this.$store.state.baseURL}/eoim/41.png`
+          //     },
+          //     {
+          //       alt:'[哭]',
+          //       src:`${this.$store.state.baseURL}/eoim/42.png`
+          //     },
+          //     {
+          //       alt:'[生气]',
+          //       src:`${this.$store.state.baseURL}/eoim/43.png`
+          //     },
+          //   ]
+          // },
           {
             // tab 的标题
             title: 'emoji',
@@ -321,7 +321,7 @@
             type: 'emoji',
             // content -> 数组
             content: ['😀', '😃', '😄', '😁', '😆','😀','😁','😂','😃','😄','😅','😆','😉','😊','😋','😎','😍','😘','😗','😙','😚',
-            '☺','😇','😐','😑','😶','😏','😣','😥','😮','😯','😪','😫','😴','😌','😛','😜','😝','😒','😓','😔','😕','😲',
+            '😇','😐','😑','😶','😏','😣','😥','😮','😯','😪','😫','😴','😌','😛','😜','😝','😒','😓','😔','😕','😲',
             '😷','😖','😞','😟','😤','😢','😭','😦','😧','😨','😬','😰','😱','😳','😵','😡','😠']
           }
         ];
@@ -345,9 +345,9 @@
           'undo',  // 撤销
           'redo'  // 重复
         ];
-        //配置服务器端地址
-        //editor.customConfig.uploadImgServer = 'http://localhost:3000/activityEdit';
+
         editor.customConfig.uploadImgShowBase64 = true;   // 使用 base64 保存图片
+        editor.customConfig.showLinkImg = false;
         editor.customConfig.uploadImgServer = `${this.$store.state.baseURL}/manager/activityImageUpload`; // 上传图片到服务器
         editor.customConfig.uploadImgHooks = {
           customInsert:function (insertImg,result,editor) {
@@ -399,7 +399,7 @@
               headers:{'Content-Type':'multipart/form-data'}
             };
             // setTimeout(()=>{
-              this.$ajax.post(`${this.$store.state.baseURL}/manager/activityEdit`
+              this.$ajax.post(`${_this.$store.state.baseURL}/manager/activityEdit`
                 ,zipFormData,config).then(function (response) {
                 console.log(response);
                 console.log(response.data);
@@ -432,6 +432,7 @@
       },
       //修改文章保存
       updataEdit() {
+
         let _this = this;
         if (this.activityEdit.title == '') {
           alert('文章标题不能为空！');
@@ -439,9 +440,7 @@
           alert('时间未选择，请填写');
         } else if (this.editorContent == '') {
           alert('文章内容未填写，请补充！')
-        } else if (this.upath == '') {
-          alert("单站图片未上传！")
-        } else {
+        }else {
           console.log(typeof this.activityEdit.date)
           console.log(this.activityEdit.date);
           let date = this.changeTime(this.activityEdit.date);
