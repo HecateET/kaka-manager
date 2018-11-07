@@ -215,7 +215,7 @@
             });
           },
           previewEdit(activityId,row){
-            const href =`http://localhost:8080/activitydetail/${activityId}`;
+            const href =`${this.$store.state.vueBaseURL}/activitydetail/${activityId}`;
             window.open(href);
           },
           updateEdit(activityId, row) {

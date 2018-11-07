@@ -101,7 +101,7 @@
               console.log(result.data.data);
               _this.activityEdit.title =result.data.data[0].activityName;
               _this.activityEdit.date = result.data.data[0].activityStartDate;
-              _this.headpic = `${axios.defaults.baseURL}${result.data.data[0].activityImage}`;
+              _this.headpic = `${_this.$store.state.baseURL}${result.data.data[0].activityImage}`;
               var content = result.data.data[0].activityDetails;
               editor.txt.html(content);
             },function (err) {
